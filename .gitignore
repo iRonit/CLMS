@@ -21,3 +21,38 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#Angular Files
+# compiled output
+clms-frontend/dist
+clms-frontend/tmp
+clms-frontend/out-tsc
+
+# dependencies
+clms-frontend/node_modules
+
+# IDEs and editors
+clms-frontend/.idea
+clms-frontend/.project
+clms-frontend/.classpath
+clms-frontend/.c9/
+clms-frontend/*.launch
+clms-frontend/.settings/
+clms-frontend/*.sublime-workspace
+
+# IDE - VSCode
+clms-frontend/.vscode/*
+clms-frontend/!.vscode/settings.json
+clms-frontend/!.vscode/tasks.json
+clms-frontend/!.vscode/launch.json
+clms-frontend/!.vscode/extensions.json
+
+# misc
+clms-frontend/.sass-cache
+clms-frontend/connect.lock
+clms-frontend/coverage
+clms-frontend/libpeerconnection.log
+clms-frontend/npm-debug.log
+clms-frontend/yarn-error.log
+clms-frontend/testem.log
+clms-frontend/typings
