@@ -1,8 +1,27 @@
 div#loginForm{ 
-    background-image:url("https://hdwallsource.com/img/2015/3/solid-light-grey-wallpaper-47201-48718-hd-wallpapers.jpg"); 
+    background-image: url("../assets/images/bg_img.jpg");
     background-repeat:no-repeat; 
     background-position:center; 
     background-size:cover; 
     padding:10px;
     height:100vh;
+}
+#logo {
+	vertical-align:middle;
+}
+.navbar-brand span {
+	font-size:2rem;
+	line-height:1.2;
+	font-weight: 200;
+	display:inline-block;
+	vertical-align:middle;
+	padding:0 0 0 15px;
+}
+.navbar-brand b {
+	display:block;
+	font-size:50%;
+	line-height:1;
+}
+.navbar-nav {
+	margin-left:auto;
 }
