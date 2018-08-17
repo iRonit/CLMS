@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       if (this.authService.login(val.username, val.password)) {
         console.log("User is logged in");
         console.log(val.username);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/user');
 
       }
     }

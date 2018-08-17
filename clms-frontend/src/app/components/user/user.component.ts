@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
+  applyLeaveTab = true;
+  viewStatusTab = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  navigateTab(tab){
+    this.applyLeaveTab = false;
+    this.viewStatusTab = false;
+    if (tab == 'applyLeaveTab') {
+      this.applyLeaveTab = true;
+    } else if (tab == 'viewStatusTab') {
+      this.viewStatusTab = true;
+    }
   }
 
 }
