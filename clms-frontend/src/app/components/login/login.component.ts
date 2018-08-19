@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(val.username, val.password)
     .pipe(first())
     .subscribe(
-        data => {
-          console.log("data= "+JSON.stringify(data));
-          this.router.navigate([data]);
+        nextLoginRoute => {
+          console.log("nextLoginRoute= "+nextLoginRoute);
+          this.router.navigate([nextLoginRoute]);
         },
         error => {
             console.log("Error= "+error);

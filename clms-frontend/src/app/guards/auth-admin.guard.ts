@@ -2,19 +2,24 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
+import {AuthService } from '../services/auth.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthAdminGuard implements CanActivate {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService  
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
 
-    if (JSON.parse(localStorage.getItem('currentUser')).match(/ADMIN/)) {
-      // logged in so return true
+    if (this.authService.isLoggedInAs().match('admin')) {
+      // logged in as admin so return true
       return true;
     }
 

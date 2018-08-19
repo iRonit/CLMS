@@ -9,10 +9,10 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
 
-  loggedInAs: any;
+  private loggedInAs: string;
 
   constructor(private http: HttpClient) { 
-    this.loggedInAs = null;
+    this.loggedInAs = '';
   }
 
   login(username: string, password: string) {
@@ -22,8 +22,10 @@ export class AuthService {
         if (res && res.accessToken) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify((res.accessToken)));
-          return res.role.match(/ADMIN/)? 'admin':'user';
+          this.loggedInAs = res.role.match(/ADMIN/)? 'admin':'user';
+          return this.loggedInAs;
         }
+        this.loggedInAs = '';
         return 'login';
       }));
   }
