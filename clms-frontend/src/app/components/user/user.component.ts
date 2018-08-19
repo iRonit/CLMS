@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UserService} from '../../services/user.service'
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -10,7 +10,7 @@ export class UserComponent implements OnInit {
   applyLeaveTab = true;
   viewStatusTab = false;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -23,6 +23,12 @@ export class UserComponent implements OnInit {
     } else if (tab == 'viewStatusTab') {
       this.viewStatusTab = true;
     }
+  }
+
+  clicked($event) {
+    this.userService.getAll()
+    .pipe()
+    .subscribe(res => console.log("------------------------->> " + JSON.stringify(res)));
   }
 
 }

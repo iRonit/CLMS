@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from '../../services/auth.service'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -29,14 +30,17 @@ export class LoginComponent implements OnInit {
   login() {
     const val = this.form.value;
 
-    if (val.username && val.password) {
-      if (this.authService.login(val.username, val.password)) {
-        console.log("User is logged in");
-        console.log(val.username);
-        this.router.navigateByUrl('/user');
+    this.authService.login(val.username, val.password)
+    .pipe(first())
+    .subscribe(
+        data => {
+          console.log("data= "+JSON.stringify(data));
+          this.router.navigate([data]);
+        },
+        error => {
+            console.log("Error= "+error);
+        });
 
-      }
-    }
 
   }
 
