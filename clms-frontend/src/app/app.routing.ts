@@ -9,8 +9,9 @@ import { AuthAdminGuard } from './guards/auth-admin.guard';
 import { AuthUserGuard } from './guards/auth-user.guard';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent},
+    { path: '', component: LoginComponent },
+    { path: 'login', component: LoginComponent },
     { path: 'user', component: UserComponent, canActivate: [AuthUserGuard] },
     { path: 'admin', component: AdminComponent, canActivate: [AuthAdminGuard] },
-    { path: '', component: LoginComponent }
+    { path: '**', redirectTo: '' }
 ];
