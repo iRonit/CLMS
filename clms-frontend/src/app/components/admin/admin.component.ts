@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
+  username: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.username = 'ronpradh';
   }
 
 }
