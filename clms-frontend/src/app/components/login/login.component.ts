@@ -12,13 +12,13 @@ import { first } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  form: FormGroup;
+  login: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService) {
-    this.form = this.fb.group({
+    this.login = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
-    const val = this.form.value;
+  onLoginSubmit() {
+    const val = this.login.value;
 
     this.authService.login(val.username, val.password)
     .pipe(first())

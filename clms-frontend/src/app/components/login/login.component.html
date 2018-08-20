@@ -2,7 +2,7 @@
   <input type="text" placeholder="Username" id="username">
   <input type="password" placeholder="Password" id="password">
   <input type="submit" value="Submit">
-</form> -->
+</form> 
 
 
   <div class="container">
@@ -24,3 +24,18 @@
       </div>
     </div>
   </div>
+-->
+<mat-card>
+  <mat-card-title class="text-center page-header">Login</mat-card-title>
+  <br>
+  <form [formGroup]="login" #f="ngForm" (submit)="onLoginSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" type="password" formControlName="password">
+    </mat-form-field>
+    <br><br>
+    <button mat-raised-button color="primary" [disabled]="!f.valid" type="submit">Login</button>
+  </form>
+</mat-card>

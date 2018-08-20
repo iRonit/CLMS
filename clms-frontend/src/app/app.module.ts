@@ -3,9 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
+import {CustomMaterialModule} from './material';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
@@ -33,11 +32,10 @@ import { AdminComponent } from './components/admin/admin.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTabsModule,
-    BrowserAnimationsModule,
-    MatTableModule,
+    CustomMaterialModule,
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],

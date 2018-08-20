@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>CLMS</title>
@@ -7,10 +8,31 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">
-  
+    <!-- Material Design CSS -->
+    <link rel="stylesheet" href="./assets/css/theme-color.css"/>
 </head>
+
 <body>
-  <app-root></app-root>
+  <nav class="navbar navbar-light">
+
+    <div class="navbar-brand">
+      <img class="d-inline-block align-center" src="/assets/images/cisco_logo.svg.png">
+      <strong>Cisco Leave Management System</strong>
+    </div>
+
+    <div class="form-inline my-2 my-lg-0 ml-auto">
+      <h5>
+        <sub>v1.0</sub>
+      </h5>
+    </div>
+
+  </nav>
+
+  <app-root>
+    <div class="centered">
+      <div class="loader"></div>
+    </div>
+  </app-root>
+
 </body>
 </html>
