@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatButton } from '@angular/material';
 
 
 export interface LeaveData {
@@ -26,7 +26,7 @@ export class ViewStatusComponent implements OnInit {
 
   constructor() { }
 
-  displayedColumns: string[] = ['username', 'createdOn', 'from', 'to', 'reason', 'status', 'remarks'];
+  displayedColumns: string[] = ['username', 'createdOn', 'from', 'to', 'reason', 'status', 'remarks', 'actions'];
   dataSource = new MatTableDataSource(LEAVE_DATA);
 
   @ViewChild(MatSort) sort: MatSort;

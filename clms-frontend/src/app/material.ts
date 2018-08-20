@@ -6,6 +6,9 @@ import {
     MatCardModule,
     MatTabsModule,
     MatButtonModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 } from '@angular/material';
 
 @NgModule({
@@ -15,7 +18,10 @@ import {
         MatTableModule,
         MatCardModule,
         MatTabsModule,
-        MatButtonModule
+        MatButtonModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     exports: [
         MatInputModule,
@@ -23,7 +29,10 @@ import {
         MatTableModule,
         MatCardModule,
         MatTabsModule,
-        MatButtonModule
+        MatButtonModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ]
 })
 export class CustomMaterialModule { }
