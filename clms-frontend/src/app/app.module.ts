@@ -19,6 +19,7 @@ import { ErrorResponseInterceptor } from './interceptors/error-response-intercep
 
 import { routes } from './app.routing';
 import { AdminComponent } from './components/admin/admin.component';
+import { AdminListComponent } from './components/admin-list/admin-list.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AdminComponent } from './components/admin/admin.component';
     UserComponent,
     ApplyLeaveComponent,
     ViewStatusComponent,
-    AdminComponent
+    AdminComponent,
+    AdminListComponent
   ],
   imports: [
     BrowserModule,
