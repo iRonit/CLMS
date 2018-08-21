@@ -1,21 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatButton } from '@angular/material';
-
-
-export interface LeaveData {
-  username: string;
-  createdOn: string;
-  from: string;
-  to: string;
-  reason: string;
-  status: string;
-  remarks: string;
-}
-
-const LEAVE_DATA: LeaveData[] = [
-  {username: 'sogolani', createdOn: '16-08-2018', from: '01-11-2018', to: '15-11-2018', reason: 'blah blah', status: 'Approved', remarks: 'whatever'},
-  {username: 'ronpradh', createdOn: '17-08-2018', from: '01-11-2018', to: '15-11-2018', reason: 'something', status: 'Approved', remarks: 'okayyy'},
-];
+import { MatTableDataSource, MatSort } from '@angular/material';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'view-status',
@@ -24,15 +11,35 @@ const LEAVE_DATA: LeaveData[] = [
 })
 export class ViewStatusComponent implements OnInit {
 
-  constructor() { }
+  displayedColumns: string[];
+  dataSource: any;
 
-  displayedColumns: string[] = ['username', 'createdOn', 'from', 'to', 'reason', 'status', 'remarks', 'actions'];
-  dataSource = new MatTableDataSource(LEAVE_DATA);
+  constructor(
+    private userService: UserService,
+    private adminService: AdminService,
+    private authService: AuthService
+  ) { }
 
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+    console.log("in ngOnInit()");
+    if (this.authService.getLoggedInRole() === 'admin') {
+      this.displayedColumns = ['username', 'createdOn', 'from', 'to', 'reason', 'status', 'remarks', 'actions'];
+      this.adminService.getAllUserLeaves("PENDING")
+        .subscribe(res => {
+          this.dataSource = new MatTableDataSource(res);
+          this.dataSource.sort = this.sort;
+        });
+    } else {
+      this.displayedColumns = ['createdOn', 'from', 'to', 'reason', 'status', 'remarks', 'actions'];
+      this.userService.getUserLeaves()
+        .subscribe(res => {
+          this.dataSource = new MatTableDataSource(res);
+          this.dataSource.sort = this.sort;
+        });
+    }
+    
   }
 
 }

@@ -17,7 +17,7 @@ export class AuthUserGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
 
-    if (this.authService.isLoggedInAs().match('user')) {
+    if (this.authService.getLoggedInRole().match('user')) {
       // logged in as user so return true
       return true;
     }

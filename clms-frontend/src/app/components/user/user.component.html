@@ -1,6 +1,11 @@
 <mat-card>
-  <mat-tab-group>
-    <mat-tab label="Apply Leave"> <apply-leave> </apply-leave> </mat-tab>
-    <mat-tab label="View Status"> <view-status> </view-status> </mat-tab>
+  <mat-tab-group #tab>
+    <button class="topright" color="primary" (click)="onLogout()" mat-raised-button>Logout</button>
+    <mat-tab label="Leave Status">
+      <view-status *ngIf="tab.selectedIndex === 0"> </view-status>
+    </mat-tab>
+    <mat-tab label="Apply Leave">
+      <apply-leave *ngIf="tab.selectedIndex === 1"> </apply-leave>
+    </mat-tab>
   </mat-tab-group>
 </mat-card>

@@ -13,7 +13,7 @@ mat-card {
 
   .topright {
     position: absolute;
-    top: 8px;
-    right: 16px;
+    top: 30px;
+    right: 30px;
     font-size: 18px;
 }

@@ -18,7 +18,7 @@ export class AuthAdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
 
-    if (this.authService.isLoggedInAs().match('admin')) {
+    if (this.authService.getLoggedInRole().match('admin')) {
       // logged in as admin so return true
       return true;
     }

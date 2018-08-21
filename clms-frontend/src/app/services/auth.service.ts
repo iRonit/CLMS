@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
@@ -9,10 +9,10 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
 
-  private loggedInAs: string;
+  private loggedInRole: string;
 
   constructor(private http: HttpClient) { 
-    this.loggedInAs = '';
+    this.loggedInRole = '';
   }
 
   login(username: string, password: string) {
@@ -21,21 +21,23 @@ export class AuthService {
         // login successful if there's a jwt token in the response
         if (res && res.accessToken) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify((res.accessToken)));
-          this.loggedInAs = res.role.match(/ADMIN/)? 'admin':'user';
-          return this.loggedInAs;
+          localStorage.setItem('username', username);
+          localStorage.setItem('accessToken', JSON.stringify((res.accessToken)));
+          this.loggedInRole = res.role.match(/ADMIN/)? 'admin':'user';
+          return this.loggedInRole;
         }
-        this.loggedInAs = '';
+        this.loggedInRole = '';
         return 'login';
       }));
   }
 
-  isLoggedInAs() {
-    return this.loggedInAs;
+  getLoggedInRole() {
+    return this.loggedInRole;
   }
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
   }
 }

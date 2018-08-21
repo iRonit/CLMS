@@ -1,10 +1,6 @@
 <mat-card>
   <mat-card-title class="text-center page-header">Admin Dashboard</mat-card-title>
-  <button class="topright" mat-button [matMenuTriggerFor]="menu">Log out</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>{{username}}</button>
-    <button mat-menu-item>Log out</button>
-  </mat-menu>
+  <button class="topright" mat-raised-button color="primary">Log out</button>
 
   <mat-tab-group>
     <mat-tab label="Pending leaves!">
