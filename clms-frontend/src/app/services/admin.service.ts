@@ -35,4 +35,16 @@ export class AdminService {
       return this.http.put<any>(`${environment.apiUrl}/admin/`+ userLeave.id, userLeave);
     }
 
+    postAdmin(admin: any) {
+      return this.http.post<any>(`${environment.apiUrl}/admin/admins`, admin);
+    }
+
+    deleteAdmin(admin: any) {
+      return this.http.delete<any>(`${environment.apiUrl}/admin/admins/` + admin.username);
+    }
+
+    getAdmins() {
+      return this.http.get<any>(`${environment.apiUrl}/admin/admins`);
+    }
+
 }

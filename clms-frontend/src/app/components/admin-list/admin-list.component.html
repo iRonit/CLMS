@@ -1,7 +1,7 @@
 <mat-grid-list cols="2" rowHeight="fit" class="grid-list">
   <mat-grid-tile colspan="1" rowspan="2">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="sno">
+      <!-- <ng-container matColumnDef="sno">
         <mat-header-cell *matHeaderCellDef> S.No. </mat-header-cell>
         <mat-cell *matCellDef="let adminData"> {{adminData.sno}} </mat-cell>
       </ng-container>
@@ -9,11 +9,11 @@
       <ng-container matColumnDef="userId">
         <mat-header-cell *matHeaderCellDef> User ID </mat-header-cell>
         <mat-cell *matCellDef="let adminData"> {{adminData.userId}} </mat-cell>
-      </ng-container>
+      </ng-container> -->
 
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let adminData"> {{adminData.name}} </mat-cell>
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+        <mat-cell *matCellDef="let adminData"> {{adminData.username}} </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -21,12 +21,19 @@
   </mat-grid-tile>
   <mat-grid-tile colspan="1" rowspan="2">
     <br>
-    <form [formGroup]="addAdmin" #f="ngForm" (submit)="onSubmit()">
+    <form [formGroup]="addAdmin" #f="ngForm" (submit)="onAdd()">
       <mat-form-field class="form-field">
         <input matInput placeholder="Username" formControlName="username">
       </mat-form-field>
       <br>
       <button mat-raised-button color="primary" [disabled]="!f.valid" type="submit">Add Admin</button>
     </form>
+    <form [formGroup]="deleteAdmin" #f="ngForm" (submit)="onDelete()">
+        <mat-form-field class="form-field">
+          <input matInput placeholder="Username" formControlName="username">
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" [disabled]="!f.valid" type="submit">Delete Admin</button>
+      </form>
   </mat-grid-tile>
 </mat-grid-list>

@@ -1,17 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-export interface PeriodicElement {
-  sno: number;
-  userId: string;
-  name: string;
-}
+import { MatTableDataSource, MatSort } from '@angular/material';
 
-const ADMIN_DATA: PeriodicElement[] = [
-  {sno: 1, userId: 'ronpradh', name: 'Ronit Pradhan'},
-  {sno: 2, userId: 'roshetty', name: 'Rohan Shetty'},
-];
-
+import { AdminService } from '../../services/admin.service';
+import { Admin } from '../../models/admin';
 
 @Component({
   selector: 'app-admin-list',
@@ -20,25 +13,64 @@ const ADMIN_DATA: PeriodicElement[] = [
 })
 export class AdminListComponent implements OnInit{
 
-  displayedColumns: string[] = ['sno', 'userId', 'name'];
-  dataSource = ADMIN_DATA;
+  displayedColumns: string[] = ['username'];
+  dataSource;
 
-  addAdmin: FormGroup;
+  addAdmin: FormGroup; 
+  deleteAdmin: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private adminService: AdminService
+  ) {
     this.addAdmin = this.formBuilder.group({
+      username: ['', Validators.required]
+    });
+    this.deleteAdmin = this.formBuilder.group({
       username: ['', Validators.required]
     });
   }
 
+  @ViewChild(MatSort) sort: MatSort;
+
   ngOnInit() {
+    this.resetAdminList();
   }
 
-  onSubmit(){
-    const val = this.addAdmin.value;
-    console.log("Leave applied successfully! :D");
-    console.log("from: "+val.username);
+  resetAdminList() {
+    this.adminService.getAdmins()
+        .subscribe(res => {
+          this.dataSource = new MatTableDataSource(res);
+          this.dataSource.sort = this.sort;
+        });
+  }
+
+  onAdd(){
+    let admin: Admin = {
+      username: this.addAdmin.value.username
+    };
+    this.adminService.postAdmin(admin)
+      .subscribe(res => {
+        this.resetAdminList();
+      },
+    err => {
+      //Display error
+      console.log('Error in admin-list.onAdd()');
+    });
   }  
+
+  onDelete(){
+    let admin: Admin = {
+      username: this.deleteAdmin.value.username
+    };
+    this.adminService.deleteAdmin(admin)
+      .subscribe(res => {
+        this.resetAdminList();
+      },
+    err => {
+      //Display error
+      console.log('Error in admin-list.onDelete()');
+    });
+  }
 
 }
