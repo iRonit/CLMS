@@ -5,6 +5,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { AdminService } from '../../services/admin.service';
 import { Admin } from '../../models/admin';
+import { UserLeave } from '../../models/user-leave';
 
 @Component({
   selector: 'app-admin-list',
@@ -14,7 +15,8 @@ import { Admin } from '../../models/admin';
 export class AdminListComponent implements OnInit{
 
   displayedColumns: string[] = ['username'];
-  dataSource;
+  dataSource: any;
+  data: UserLeave[];
 
   addAdmin: FormGroup; 
   deleteAdmin: FormGroup;
@@ -34,15 +36,16 @@ export class AdminListComponent implements OnInit{
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
-    this.resetAdminList();
-  }
-
-  resetAdminList() {
     this.adminService.getAdmins()
         .subscribe(res => {
-          this.dataSource = new MatTableDataSource(res);
-          this.dataSource.sort = this.sort;
+          this.data = res;
+          this.loadData();
         });
+  }
+
+  loadData() {
+    this.dataSource = new MatTableDataSource(this.data);
+    this.dataSource.sort = this.sort;
   }
 
   onAdd(){
@@ -51,7 +54,8 @@ export class AdminListComponent implements OnInit{
     };
     this.adminService.postAdmin(admin)
       .subscribe(res => {
-        this.resetAdminList();
+        this.data.push(admin);
+        this.loadData();
       },
     err => {
       //Display error
@@ -65,7 +69,8 @@ export class AdminListComponent implements OnInit{
     };
     this.adminService.deleteAdmin(admin)
       .subscribe(res => {
-        this.resetAdminList();
+        this.data.splice(this.data.indexOf(admin),1);
+        this.loadData();
       },
     err => {
       //Display error

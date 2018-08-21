@@ -3,6 +3,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { AdminService } from '../../services/admin.service';
+import { UserLeave } from '../../models/user-leave';
 
 @Component({
   selector: 'view-status',
@@ -13,6 +14,7 @@ export class ViewStatusComponent implements OnInit {
 
   displayedColumns: string[];
   dataSource: any;
+  data: UserLeave[];
 
   constructor(
     private userService: UserService,
@@ -28,17 +30,37 @@ export class ViewStatusComponent implements OnInit {
       this.displayedColumns = ['username', 'createdOn', 'from', 'to', 'reason', 'status', 'remarks', 'actions'];
       this.adminService.getAllUserLeaves("PENDING")
         .subscribe(res => {
-          this.dataSource = new MatTableDataSource(res);
-          this.dataSource.sort = this.sort;
+          this.data = res;
+          this.loadData();
         });
     } else {
       this.displayedColumns = ['createdOn', 'from', 'to', 'reason', 'status', 'remarks', 'actions'];
       this.userService.getUserLeaves()
         .subscribe(res => {
-          this.dataSource = new MatTableDataSource(res);
-          this.dataSource.sort = this.sort;
+          this.data = res;
+          this.loadData();
         });
     }
+  }
+
+  loadData() {
+    this.dataSource = new MatTableDataSource(this.data);
+    this.dataSource.sort = this.sort;
+  }
+
+  onDelete(leaveData: UserLeave) {
+    console.log("Delete: " + JSON.stringify(leaveData));
+    this.userService.deleteUserLeave(leaveData.id)
+      .subscribe(res => {
+        this.data.splice(this.data.indexOf(leaveData),1);
+        this.loadData();
+      }, err => {
+        console.log("Error in view-status.onDelete()");
+      });
+  }
+
+  //toDo
+  onEdit(leaveData: UserLeave) {
     
   }
 

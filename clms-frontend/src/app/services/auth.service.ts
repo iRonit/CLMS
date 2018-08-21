@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
+import { Router } from '../../../node_modules/@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class AuthService {
 
   private loggedInRole: string;
 
-  constructor(private http: HttpClient) { 
+  constructor(
+    private http: HttpClient,
+    private router: Router) { 
     this.loggedInRole = '';
   }
 
@@ -38,6 +41,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('username');
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['login']);
   }
 }

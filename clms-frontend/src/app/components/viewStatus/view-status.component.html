@@ -38,10 +38,10 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let leaveData">
-            <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="primary">
+            <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="primary" (click)="onEdit()">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn">
+            <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="onDelete(leaveData)">
                 <mat-icon>delete</mat-icon>
             </button>
             </mat-cell>

@@ -30,7 +30,7 @@ export class UserService {
     return this.http.put<any>(`${environment.apiUrl}/user/` + userLeave.id, userLeave);
   }
 
-  deleteUserLeave(id: string) {
+  deleteUserLeave(id: number) {
     return this.http.delete<any>(`${environment.apiUrl}/user/` + id);
   }
 
