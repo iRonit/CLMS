@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 import { MatTableDataSource, MatSort } from '@angular/material';
 
@@ -8,13 +10,13 @@ import { Admin } from '../../models/admin';
 import { UserLeave } from '../../models/user-leave';
 
 @Component({
-  selector: 'app-admin-list',
-  templateUrl: './admin-list.component.html',
-  styleUrls: ['./admin-list.component.css']
+  selector: 'app-manage-admin',
+  templateUrl: './manage-admin-dialog.component.html',
+  styleUrls: ['./manage-admin-dialog.component.css']
 })
-export class AdminListComponent implements OnInit{
+export class ManageAdminDialogComponent implements OnInit{
 
-  displayedColumns: string[] = ['username'];
+  displayedColumns: string[] = ['username', 'delete'];
   dataSource: any;
   data: UserLeave[];
 
@@ -23,6 +25,8 @@ export class AdminListComponent implements OnInit{
 
   constructor(
     private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<ManageAdminDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) data,
     private adminService: AdminService
   ) {
     this.addAdmin = this.formBuilder.group({
@@ -43,6 +47,10 @@ export class AdminListComponent implements OnInit{
         });
   }
 
+  close() {
+    this.dialogRef.close();
+  }
+
   loadData() {
     this.dataSource = new MatTableDataSource(this.data);
     this.dataSource.sort = this.sort;
@@ -54,7 +62,7 @@ export class AdminListComponent implements OnInit{
     };
     this.adminService.postAdmin(admin)
       .subscribe(res => {
-        this.data.push(admin);
+        this.data.push(res);
         this.loadData();
       },
     err => {
@@ -63,10 +71,7 @@ export class AdminListComponent implements OnInit{
     });
   }  
 
-  onDelete(){
-    let admin: Admin = {
-      username: this.deleteAdmin.value.username
-    };
+  onDelete(admin: Admin){
     this.adminService.deleteAdmin(admin)
       .subscribe(res => {
         this.data.splice(this.data.indexOf(admin),1);

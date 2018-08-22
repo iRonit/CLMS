@@ -1,5 +1,7 @@
-<br>
-<form [formGroup]="applyLeaveForm" #f="ngForm" (submit)="onApply()">
+<h2 mat-dialog-title><strong>Leave Details</strong></h2>
+
+<mat-dialog-content [formGroup]="applyLeaveForm" #f="ngForm">
+
     <mat-form-field class="form-date1">
         <input matInput [matDatepicker]="picker" placeholder="From" formControlName="from">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -14,7 +16,10 @@
     <mat-form-field class="form-field">
         <textarea matInput placeholder="Reason" formControlName="reason"></textarea>
     </mat-form-field>
-    <br>
-    <br>
-    <button mat-raised-button color="primary" [disabled]="!f.valid" type="submit">Apply</button>
-</form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-primary" [disabled]="!f.valid" (click)="onApply()">Apply</button>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+</mat-dialog-actions>

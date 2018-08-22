@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>
+  <strong>Manage Admins</strong>
+</h2>
+
+<mat-dialog-content [formGroup]="addAdmin" #f="ngForm">
+
+  <mat-grid-list cols="3" rowHeight="40px">
+    <mat-grid-tile colspan="2" rowspan="2">
+      <mat-form-field class="form-field">
+        <input matInput placeholder="Username" formControlName="username">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="2">
+      <button class="addButton" mat-raised-button color="primary" [disabled]="!f.valid" (click)="onAdd()">Add Admin</button>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</mat-dialog-content>
+
+<mat-dialog-content>
+  <table mat-table [dataSource]="dataSource" >
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let adminData"> {{adminData.username}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="align-right" *matCellDef="let adminData">
+        <button mat-icon-button color="warn" (click)="onDelete(adminData)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+</mat-dialog-content>
+<br>
+
+<mat-dialog-actions align="center">
+  <button class="mat-raised-button" (click)="close()">Done</button>
+</mat-dialog-actions>

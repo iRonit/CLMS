@@ -11,15 +11,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserComponent } from './components/user/user.component';
-import { ApplyLeaveComponent } from './components/applyLeave/apply-leave.component';
-import { ViewStatusComponent } from './components/viewStatus/view-status.component';
+import { ApplyLeaveDialogComponent } from './components/applyLeaveDialog/apply-leave-dialog.component';
+import { LeavesTableComponent } from './components/leaves-table/leaves-table.component';
 
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorResponseInterceptor } from './interceptors/error-response-interceptor';
 
 import { routes } from './app.routing';
 import { AdminComponent } from './components/admin/admin.component';
-import { AdminListComponent } from './components/admin-list/admin-list.component';
+import { ManageAdminDialogComponent } from './components/manage-admin-dialog/manage-admin-dialog.component';
 
 
 @NgModule({
@@ -27,10 +27,10 @@ import { AdminListComponent } from './components/admin-list/admin-list.component
     AppComponent,
     LoginComponent,
     UserComponent,
-    ApplyLeaveComponent,
-    ViewStatusComponent,
+    ApplyLeaveDialogComponent,
+    LeavesTableComponent,
     AdminComponent,
-    AdminListComponent
+    ManageAdminDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +45,10 @@ import { AdminListComponent } from './components/admin-list/admin-list.component
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorResponseInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ApplyLeaveDialogComponent,
+    ManageAdminDialogComponent
+  ]
 })
 export class AppModule { }

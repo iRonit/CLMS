@@ -1,12 +1,13 @@
 <mat-card>
-  <button class="topright" color="primary" (click)="onLogout()" mat-raised-button>Logout</button>
-  <br><br><br>
-  <mat-tab-group #tab>
-    <mat-tab label="Leave Status">
-      <view-status *ngIf="tab.selectedIndex === 0"> </view-status>
-    </mat-tab>
-    <mat-tab label="Apply Leave">
-      <apply-leave *ngIf="tab.selectedIndex === 1"> </apply-leave>
-    </mat-tab>
-  </mat-tab-group>
+  <mat-card-title class="page-header">Hi,
+    <strong>{{username}}.</strong>
+  </mat-card-title>
+  <button mat-raised-button class="topright" color="primary" (click)="onLogout()">Logout</button>
+
+  <button mat-raised-button color="info" (click)="openApplyLeaveDialog()">Apply Leave</button>
+
+  <br><br>
+
+  <leaves-table *ngIf="data" [data]="data"></leaves-table>
+
 </mat-card>

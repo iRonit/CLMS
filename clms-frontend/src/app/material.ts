@@ -11,7 +11,9 @@ import {
     MatNativeDateModule,
     MatMenuModule,
     MatSortModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    MatPaginatorModule
 } from '@angular/material';
 
 @NgModule({
@@ -27,7 +29,9 @@ import {
         MatNativeDateModule,
         MatMenuModule,
         MatSortModule,
-        MatGridListModule
+        MatGridListModule,
+        MatDialogModule,
+        MatPaginatorModule
     ],
     exports: [
         MatInputModule,
@@ -41,7 +45,9 @@ import {
         MatNativeDateModule,
         MatMenuModule,
         MatSortModule,
-        MatGridListModule
+        MatGridListModule,
+        MatDialogModule,
+        MatPaginatorModule
     ]
 })
 export class CustomMaterialModule { }

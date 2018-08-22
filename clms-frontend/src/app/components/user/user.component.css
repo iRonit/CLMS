@@ -8,7 +8,7 @@ mat-card {
   right: 6%;
   top: 13%;
   background-color: white;
-  min-height: 300px;
+  min-height: 70%;
 }
 
 .topright {
@@ -16,4 +16,8 @@ mat-card {
   top: 30px;
   right: 30px;
   font-size: 16px;
+}
+
+mat-card-title {
+  text-align: left;
 }

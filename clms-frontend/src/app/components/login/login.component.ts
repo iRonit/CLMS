@@ -31,18 +31,14 @@ export class LoginComponent implements OnInit {
     const val = this.login.value;
 
     this.authService.login(val.username, val.password)
-    .pipe(first())
-    .subscribe(
+      .pipe(first())
+      .subscribe(
         nextLoginRoute => {
-          console.log("nextLoginRoute= "+nextLoginRoute);
+          console.log("nextLoginRoute= " + nextLoginRoute);
           this.router.navigate([nextLoginRoute]);
         },
         error => {
-            console.log("Error= "+error);
+          console.log("Error= " + error);
         });
-
-
   }
-
-
 }

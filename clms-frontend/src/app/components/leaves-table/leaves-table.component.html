@@ -1,5 +1,5 @@
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
+<div class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="username">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
         <mat-cell *matCellDef="let leaveData"> {{leaveData.username}} </mat-cell>
@@ -32,21 +32,37 @@
 
     <ng-container matColumnDef="remarks">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.remarks}} </mat-cell>
+        <mat-cell *matCellDef="let leaveData"> {{leaveData.remark}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let leaveData">
-            <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="primary" (click)="onEdit()">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="onDelete(leaveData)">
-                <mat-icon>delete</mat-icon>
-            </button>
+
+        <div *ngIf="role=='user'; else admin">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let leaveData">
+                <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="onDelete(leaveData)">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </mat-cell>
+        </div>
+        <ng-template #admin>
+            <mat-header-cell *matHeaderCellDef>
+                <mat-icon>thumbs_up_down</mat-icon>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData">
+                <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="success" (click)="onAccept(leaveData)">
+                    <mat-icon>thumb_up</mat-icon>
+                </button>
+                <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="OnReject(leaveData)">
+                    <mat-icon>thumb_down</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-template>
+
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+</div>

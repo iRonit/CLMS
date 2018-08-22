@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminListComponent } from './admin-list.component';
+import { ManageAdminDialogComponent } from './manage-admin-dialog.component';
 
-describe('AdminListComponent', () => {
-  let component: AdminListComponent;
-  let fixture: ComponentFixture<AdminListComponent>;
+describe('ManageAdminDialogComponent', () => {
+  let component: ManageAdminDialogComponent;
+  let fixture: ComponentFixture<ManageAdminDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminListComponent ]
+      declarations: [ ManageAdminDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminListComponent);
+    fixture = TestBed.createComponent(ManageAdminDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

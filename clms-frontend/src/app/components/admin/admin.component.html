@@ -1,12 +1,19 @@
 <mat-card>
-  <button class="topright" mat-raised-button color="primary">Log out</button>
-  <mat-card-title class="text-center page-header">Admin Dashboard</mat-card-title>
-  <mat-tab-group>
+    <mat-card-title class="page-header">Hi,
+        <strong>{{username}}.</strong>
+      </mat-card-title>
+      <button mat-raised-button class="topright" color="primary" (click)="onLogout()">Logout</button>
+
+      <button mat-raised-button color="info" (click)="openManageAdminDialog()">Manage Admins</button>
+      <br><br>
+
+      <leaves-table *ngIf="data" [data]="data"></leaves-table>
+  <!-- <mat-tab-group>
     <mat-tab label="Pending leaves!">
       <view-status> </view-status>
     </mat-tab>
     <mat-tab label="Admins">
       <app-admin-list></app-admin-list>
     </mat-tab>
-  </mat-tab-group>
+  </mat-tab-group> -->
 </mat-card>

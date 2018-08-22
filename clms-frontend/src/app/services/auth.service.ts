@@ -11,11 +11,13 @@ import { Router } from '../../../node_modules/@angular/router';
 export class AuthService {
 
   private loggedInRole: string;
+  private loggedInUsername: string;
 
   constructor(
     private http: HttpClient,
     private router: Router) { 
     this.loggedInRole = '';
+    this.loggedInUsername ='';
   }
 
   login(username: string, password: string) {
@@ -24,12 +26,12 @@ export class AuthService {
         // login successful if there's a jwt token in the response
         if (res && res.accessToken) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('username', username);
           localStorage.setItem('accessToken', JSON.stringify((res.accessToken)));
+          this.loggedInUsername =  username;
           this.loggedInRole = res.role.match(/ADMIN/)? 'admin':'user';
+
           return this.loggedInRole;
         }
-        this.loggedInRole = '';
         return 'login';
       }));
   }
@@ -38,10 +40,15 @@ export class AuthService {
     return this.loggedInRole;
   }
 
+  getLoggedInUsername() {
+    return this.loggedInUsername;
+  }
+
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('username');
     localStorage.removeItem('accessToken');
+    this.loggedInRole = '';
+    this.loggedInUsername = '';
     this.router.navigate(['login']);
   }
 }
