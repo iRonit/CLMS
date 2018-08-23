@@ -1,19 +1,18 @@
 <mat-card>
-    <mat-card-title class="page-header">Hi,
-        <strong>{{username}}.</strong>
-      </mat-card-title>
-      <button mat-raised-button class="topright" color="primary" (click)="onLogout()">Logout</button>
+  <mat-card-title class="page-header">Hi,
+    <strong>{{username}}.</strong>
+  </mat-card-title>
+  <button mat-raised-button class="topright" color="primary" (click)="onLogout()">Logout</button>
 
-      <button mat-raised-button color="info" (click)="openManageAdminDialog()">Manage Admins</button>
-      <br><br>
+  <button mat-raised-button color="info" (click)="openManageAdminDialog()">Manage Admins</button>
+  <button mat-raised-button color="info" (click)="toggleVisualize()">{{visualizeButtonLabel}}</button>
+  <br>
+  <br>
 
-      <leaves-table *ngIf="data" [data]="data"></leaves-table>
-  <!-- <mat-tab-group>
-    <mat-tab label="Pending leaves!">
-      <view-status> </view-status>
-    </mat-tab>
-    <mat-tab label="Admins">
-      <app-admin-list></app-admin-list>
-    </mat-tab>
-  </mat-tab-group> -->
+  <div *ngIf="data && !visualizing">
+      <leaves-table [data]="data"></leaves-table>
+  </div>
+
+  <canvas [hidden]="!visualizing" #linecanvas id="linecanvas">{{chart}}</canvas>
+
 </mat-card>

@@ -20,6 +20,7 @@ import { ErrorResponseInterceptor } from './interceptors/error-response-intercep
 import { routes } from './app.routing';
 import { AdminComponent } from './components/admin/admin.component';
 import { ManageAdminDialogComponent } from './components/manage-admin-dialog/manage-admin-dialog.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ManageAdminDialogComponent } from './components/manage-admin-dialog/man
     RouterModule.forRoot(routes)
   ],
   providers: [
+    DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorResponseInterceptor, multi: true }
   ],
