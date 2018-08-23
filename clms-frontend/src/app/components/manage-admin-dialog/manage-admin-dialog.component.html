@@ -4,13 +4,13 @@
 
 <mat-dialog-content [formGroup]="addAdmin" #f="ngForm">
 
-  <mat-grid-list cols="3" rowHeight="40px">
-    <mat-grid-tile colspan="2" rowspan="2">
+  <mat-grid-list cols="3" rowHeight="70px">
+    <mat-grid-tile colspan="2" rowspan="1">
       <mat-form-field class="form-field">
         <input matInput placeholder="Username" formControlName="username">
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile colspan="1" rowspan="2">
+    <mat-grid-tile colspan="1" rowspan="1">
       <button class="addButton" mat-raised-button color="primary" [disabled]="!f.valid" (click)="onAdd()">Add Admin</button>
     </mat-grid-tile>
   </mat-grid-list>
