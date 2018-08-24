@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" *ngIf="data.length > 0; else noRecords">
 <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="username">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
@@ -66,3 +66,6 @@
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
 </div>
+<ng-template #noRecords>
+        <mat-toolbar class="title-center" color="info">No leaves applied currently!</mat-toolbar>
+</ng-template>
