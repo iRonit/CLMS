@@ -66,7 +66,7 @@ export class AdminComponent implements OnInit {
     console.log("In prepareChart()");
     let today = new Date();
     let endDate = new Date();
-    endDate.setMonth(endDate.getMonth() + 2);
+    endDate.setMonth(endDate.getMonth() + 1);
     let chartData = this.prepareChartData(today, endDate);
     let chartOptions = this.prepareChartOptions(null, null);
     this.chart = new Chart('linecanvas', {

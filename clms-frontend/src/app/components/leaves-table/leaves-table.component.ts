@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatDialog, MatDialogConfig } from "@angular/material";
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { AdminService } from '../../services/admin.service';
 import { UserLeave } from '../../models/user-leave';
+import { RemarksDialogComponent } from '../remarks-dialog/remarks-dialog.component';
 
 @Component({
   selector: 'leaves-table',
@@ -23,8 +25,9 @@ export class LeavesTableComponent implements OnInit, OnChanges {
   constructor(
     private userService: UserService,
     private adminService: AdminService,
-    private authService: AuthService
-  ) { 
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {
     this.role = this.authService.getLoggedInRole();
   }
 
@@ -49,13 +52,14 @@ export class LeavesTableComponent implements OnInit, OnChanges {
     this.dataSource = new MatTableDataSource(this.data);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    console.log("---> dataSource = " + JSON.stringify(this.data));
   }
 
   onDelete(leaveData: UserLeave) {
     console.log("Delete: " + JSON.stringify(leaveData));
     this.userService.deleteUserLeave(leaveData.id)
       .subscribe(res => {
-        this.data.splice(this.data.indexOf(leaveData),1);
+        this.data.splice(this.data.indexOf(leaveData), 1);
         this.loadData();
       }, err => {
         console.log("Error in view-status.onDelete()");
@@ -64,21 +68,38 @@ export class LeavesTableComponent implements OnInit, OnChanges {
 
   onAccept(leaveData: UserLeave) {
     console.log("ACCEPTEDDDD");
-    let ul = Object.assign([],leaveData);
-    leaveData.status = "APPROVED";
-    leaveData.remark = "yeah sure.... put your papers too. :/";
-    this.adminService.updateLeaveStatusRemark(leaveData)
-      .subscribe(
-        res => {
-          //this.data.splice(this.data.indexOf(ul),1);
-          //this.data.push(res);
-          this.loadData();
-        }
-      );
+    this.openRemarksDialog(leaveData, "APPROVED");
   }
 
   onReject(leaveData: UserLeave) {
     console.log("REJECTEDDDDDD :(");
+    this.openRemarksDialog(leaveData, "REJECTED");
+  }
+
+  openRemarksDialog(leaveData: UserLeave, status: string) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(RemarksDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      formData => {
+        if (formData) {
+          console.log("FormData: " + JSON.stringify(formData));
+          leaveData.status = status;
+          leaveData.remark = formData.remarks;
+          this.adminService.updateLeaveStatusRemark(leaveData)
+            .subscribe(
+              res => {
+                this.loadData();
+              }
+            );
+        }
+
+      }
+    );
   }
 
   applyFilter(filterValue: string) {
