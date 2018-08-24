@@ -2,7 +2,7 @@
   <mat-card-title class="page-header">Hi,
     <strong>{{username}}.</strong>
   </mat-card-title>
-  <button mat-raised-button class="topright" color="primary" (click)="onLogout()">Logout</button>
+  <button mat-button class="topright" (click)="onLogout()"><mat-icon>input</mat-icon> Logout</button>
 
   <button mat-raised-button color="info" (click)="openManageAdminDialog()">Manage Admins</button>
   <button mat-raised-button color="info" (click)="toggleVisualize()">{{visualizeButtonLabel}}</button>
@@ -12,7 +12,23 @@
   <div *ngIf="data && !visualizing">
       <leaves-table [data]="data"></leaves-table>
   </div>
-
+  <div [hidden]="!visualizing">
+      <form [formGroup]="dateRangeSelectForm" #f="ngForm" >
+          <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="From" formControlName="from">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+    
+          <mat-form-field>
+              <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="to">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+    
+          <button mat-button (click)="updateChart()">Go!</button>
+      </form>
+  </div>
   <canvas [hidden]="!visualizing" #linecanvas id="linecanvas">{{chart}}</canvas>
 
 </mat-card>

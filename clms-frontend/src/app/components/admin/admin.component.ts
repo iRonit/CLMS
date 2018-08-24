@@ -8,6 +8,7 @@ import { ManageAdminDialogComponent } from '../manage-admin-dialog/manage-admin-
 
 import { Chart } from 'chart.js';
 import { DatePipe } from '@angular/common';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -22,15 +23,17 @@ export class AdminComponent implements OnInit {
   visualizing: boolean;
   visualizeButtonLabel: string;
 
-  MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  dateRangeSelectForm: FormGroup;
 
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
     private adminService: AdminService,
+    private formBuilder: FormBuilder,
     private datePipe: DatePipe
   ) {
     this.username = this.authService.getLoggedInUsername();
+
   }
 
   ngOnInit() {
@@ -41,6 +44,11 @@ export class AdminComponent implements OnInit {
       });
     this.visualizing = false;
     this.visualizeButtonLabel = "Visualize!";
+    this.dateRangeSelectForm = this.formBuilder.group({
+      from: ['', Validators.required],
+      to: ['', Validators.required],
+      reason: ['', Validators.required],
+    });
   }
 
   onLogout() {
@@ -56,72 +64,69 @@ export class AdminComponent implements OnInit {
 
   prepareChart() {
     console.log("In prepareChart()");
-    let chartData = this.prepareChartData();
-    let chartOptions = this.prepareChartOptions();
+    let today = new Date();
+    let endDate = new Date();
+    endDate.setMonth(endDate.getMonth() + 2);
+    let chartData = this.prepareChartData(today, endDate);
+    let chartOptions = this.prepareChartOptions(null, null);
     this.chart = new Chart('linecanvas', {
       type: 'line',
       data: chartData,
       options: chartOptions
     });
+    this.chart.update();
   }
 
-  prepareChartData() {
+  prepareChartData(today: Date, endDate: Date) {
     let labels = [];
     let approvedData = []; //need to fetch from db
     let pendingData = []; //need to fetch from db
     let combinedData = [];
 
-
     //-------------------------------------->> consuming the data <<--------------------------------------
-    let today = new Date();
-    let endDate = new Date();
-    endDate.setMonth(endDate.getMonth() + 1);
-
     for (let date = today; this.daysDifference(date, endDate) != 0; date.setDate(date.getDate() + 1)) {
-      let formattedDate =  this.datePipe.transform(date, 'yyyy-MM-dd');
+      let formattedDate = this.datePipe.transform(date, 'yyyy-MM-dd');
       labels.push(formattedDate);
       let pCount = 0;
       let aCount = 0;
 
-       this.data.forEach(userLeaveData => {
-         if(formattedDate >= userLeaveData.fromDate && formattedDate <= userLeaveData.toDate) {
-           if(userLeaveData.status == 'PENDING') {
-             pCount++;
-           } else if(userLeaveData.status == 'APPROVED') {
-             aCount++;
-           }
-         }
-       });
+      this.data.forEach(userLeaveData => {
+        if (formattedDate >= userLeaveData.fromDate && formattedDate <= userLeaveData.toDate) {
+          if (userLeaveData.status == 'PENDING') {
+            pCount++;
+          } else if (userLeaveData.status == 'APPROVED') {
+            aCount++;
+          }
+        }
+      });
 
-       pendingData.push(pCount);
-       approvedData.push(aCount);
-       combinedData.push(pCount+aCount);
+      pendingData.push(pCount);
+      approvedData.push(aCount);
+      combinedData.push(pCount + aCount);
     }
-
-
-      let chartData = {
-        labels: labels,
-        datasets: [{
-          label: 'Approved',
-          data: approvedData,
-          borderColor: '#3cba9f',
-          fill: false,
-        }, {
-          label: 'Pending',
-          data: pendingData,
-          borderColor: '#ffcc00',
-          fill: false,
-        }, {
-          label: 'Combined',
-          data: combinedData,
-          borderColor: '#4c2f42',
-          fill: false,
-        }]
-      };
+    let chartData = {
+      labels: labels,
+      datasets: [{
+        label: 'Approved',
+        data: approvedData,
+        borderColor: '#3cba9f',
+        fill: false,
+      }, {
+        label: 'Pending',
+        data: pendingData,
+        borderColor: '#ffcc00',
+        fill: false,
+      }, {
+        label: 'Combined',
+        data: combinedData,
+        borderColor: '#4c2f42',
+        fill: false,
+      }]
+    };
     return chartData;
   }
 
-  prepareChartOptions() {
+  prepareChartOptions(from: Date, to: Date) {
     let chartOptions = {
       responsive: true,
       title: {
@@ -136,13 +141,38 @@ export class AdminComponent implements OnInit {
         mode: 'nearest',
         intersect: true
       },
+      legend: {
+        display: true,
+        labels: {
+          fontSize: 15
+        }
+      },
+      layout: {
+        padding: {
+          left: 50,
+          right: 50,
+          top: 10,
+          bottom: 10
+        }
+      },
       scales: {
         xAxes: [{
+          type: 'time',
+          time: {
+            displayFormats: {
+              month: 'll'
+            },
+            parser: 'YYYY-MM-DD',
+            minUnit: 'day',
+            min: this.datePipe.transform(from, 'yyyy-MM-dd'),
+            max: this.datePipe.transform(to, 'yyyy-MM-dd')
+          },
           display: true,
           scaleLabel: {
             display: true,
             labelString: 'Timeline'
-          }
+          },
+          distribution: 'series'
         }],
         yAxes: [{
           display: true,
@@ -166,6 +196,14 @@ export class AdminComponent implements OnInit {
       this.visualizeButtonLabel = "Back To Table!";
       this.prepareChart();
     }
+  }
+
+  updateChart() {
+    console.log("updateChart=> " + JSON.stringify(this.chart.options.scales.xAxes[0]));
+    this.chart.options.scales.xAxes[0].time.min = this.datePipe.transform(this.dateRangeSelectForm.value.from, 'yyyy-MM-dd');
+    this.chart.options.scales.xAxes[0].time.max = this.datePipe.transform(this.dateRangeSelectForm.value.to, 'yyyy-MM-dd');
+    this.chart.data = this.prepareChartData(this.dateRangeSelectForm.value.from, this.dateRangeSelectForm.value.to);
+    this.chart.update();
   }
 
   daysDifference(date1: Date, date2: Date) {

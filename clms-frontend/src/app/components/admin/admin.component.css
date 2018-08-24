@@ -1,7 +1,7 @@
 mat-card {
     width: 90%;
     margin: 2em auto;
-    text-align: center;
+    /* text-align: center; */
     padding-top: 30px;
     position: absolute;
     left: 6%;
