@@ -1,0 +1,14 @@
+<h2 mat-dialog-title><strong>Add Remarks</strong></h2>
+
+<mat-dialog-content [formGroup]="remarksForm" #f="ngForm">
+
+    <mat-form-field class="form-field">
+        <textarea matInput placeholder="Remarks" formControlName="remarks"></textarea>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-primary" [disabled]="!f.valid" (click)="onAddRemarks()">Add</button>
+    <button class="mat-raised-button" (click)="close()">Cancel</button>
+</mat-dialog-actions>

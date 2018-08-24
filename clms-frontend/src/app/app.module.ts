@@ -21,6 +21,7 @@ import { routes } from './app.routing';
 import { AdminComponent } from './components/admin/admin.component';
 import { ManageAdminDialogComponent } from './components/manage-admin-dialog/manage-admin-dialog.component';
 import { DatePipe } from '@angular/common';
+import { RemarksDialogComponent } from './components/remarks-dialog/remarks-dialog.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { DatePipe } from '@angular/common';
     ApplyLeaveDialogComponent,
     LeavesTableComponent,
     AdminComponent,
-    ManageAdminDialogComponent
+    ManageAdminDialogComponent,
+    RemarksDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import { DatePipe } from '@angular/common';
   bootstrap: [AppComponent],
   entryComponents: [
     ApplyLeaveDialogComponent,
-    ManageAdminDialogComponent
+    ManageAdminDialogComponent,
+    RemarksDialogComponent
   ]
 })
 export class AppModule { }
