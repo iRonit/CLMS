@@ -1,71 +1,74 @@
 <div class="mat-elevation-z8" *ngIf="data.length > 0; else noRecords">
-<table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="username">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.username}} </mat-cell>
-    </ng-container>
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="username">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData"> {{leaveData.username}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="createdOn">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Created On </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.appliedDate}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="createdOn">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Created On </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData"> {{leaveData.appliedDate | date: 'MMM d, y'}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="from">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Applied From </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.fromDate}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="from">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Applied From </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData"> {{leaveData.fromDate | date: 'MMM d, y'}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="to">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Applied Till </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.toDate}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="to">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Applied Till </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData"> {{leaveData.toDate | date: 'MMM d, y'}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="reason">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Reason </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.reason}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="reason">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Reason </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData"> {{leaveData.reason}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.status}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData"> {{leaveData.status}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="remarks">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </mat-header-cell>
-        <mat-cell *matCellDef="let leaveData"> {{leaveData.remark}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="remarks">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </mat-header-cell>
+            <mat-cell *matCellDef="let leaveData"> {{leaveData.remark}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="actions">
+        <ng-container matColumnDef="actions">
 
-        <div *ngIf="role=='user'; else admin">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let leaveData">
-                <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="onDelete(leaveData)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </mat-cell>
-        </div>
-        <ng-template #admin>
-            <mat-header-cell *matHeaderCellDef>
-                <mat-icon>thumbs_up_down</mat-icon>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let leaveData">
-                <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="success" (click)="onAccept(leaveData)">
-                    <mat-icon>thumb_up</mat-icon>
-                </button>
-                <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="OnReject(leaveData)">
-                    <mat-icon>thumb_down</mat-icon>
-                </button>
-            </mat-cell>
-        </ng-template>
+            <div *ngIf="role=='user'; else admin">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let leaveData">
+                    <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="onDelete(leaveData)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </div>
+            <ng-template #admin>
+                <mat-header-cell *matHeaderCellDef>
+                    <mat-icon>thumbs_up_down</mat-icon>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let leaveData">
+                    <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="success" (click)="onAccept(leaveData)">
+                        <mat-icon>thumb_up</mat-icon>
+                    </button>
+                    <button *ngIf="leaveData.status === 'PENDING'" mat-icon-button color="warn" (click)="OnReject(leaveData)">
+                        <mat-icon>thumb_down</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-template>
 
-    </ng-container>
+        </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</table>
-<mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
 </div>
 <ng-template #noRecords>
-        <mat-toolbar class="title-center" color="info">No leaves applied currently!</mat-toolbar>
+    <mat-toolbar class="title-center" color="info"><span>No leaves applied currently!</span></mat-toolbar>
 </ng-template>

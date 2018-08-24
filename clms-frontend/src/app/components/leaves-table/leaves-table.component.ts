@@ -81,4 +81,8 @@ export class LeavesTableComponent implements OnInit, OnChanges {
     console.log("REJECTEDDDDDD :(");
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 }

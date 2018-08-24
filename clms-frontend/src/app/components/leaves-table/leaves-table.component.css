@@ -2,6 +2,40 @@ table {
   width: 100%;
 }
 
+.mat-elevation-z8{
+  padding: 20px;
+}
+
 .mat-column-actions {
-  flex: 0 0 5%;
+  display:flex !important;
+  justify-content:flex-end!important;
+  flex: 0 0 10%;
+}
+
+.mat-column-username {
+  flex: 0 0 12%;
+}
+
+.mat-column-createdOn {
+  flex: 0 0 12%;
+}
+
+.mat-column-from {
+  flex: 0 0 12%;
+}
+
+.mat-column-to {
+  flex: 0 0 12%;
+}
+
+.mat-column-reason {
+  flex: 0 0 20%;
+}
+
+.mat-column-status {
+  flex: 0 0 12%;
+}
+
+.title-center{
+  justify-content: center;
 }
